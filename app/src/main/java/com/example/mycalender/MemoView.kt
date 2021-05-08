@@ -8,6 +8,12 @@ class MemoView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : androidx.appcompat.widget.AppCompatTextView(context, attrs, defStyleAttr) {
 
+
+
+    init {
+
+    }
+
     fun setData(text: String) {
         this.text = text
     }

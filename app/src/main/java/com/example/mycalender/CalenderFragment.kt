@@ -19,6 +19,8 @@ class CalenderFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_calender, container, false)
 
+       binding.tableRow.addMemo("테스트")
+
         return binding.root
     }
 }
