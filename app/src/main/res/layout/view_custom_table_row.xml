@@ -3,31 +3,31 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-<!--    <com.example.mycalender.CustomDayView-->
+<!--    <com.example.mycalender.views.CustomDayView-->
 <!--        android:id="@+id/sun"-->
 <!--        android:orientation="horizontal" />-->
 
-<!--    <com.example.mycalender.CustomDayView-->
+<!--    <com.example.mycalender.views.CustomDayView-->
 <!--        android:id="@+id/mon"-->
 <!--        android:orientation="horizontal" />-->
 
-<!--    <com.example.mycalender.CustomDayView-->
+<!--    <com.example.mycalender.views.CustomDayView-->
 <!--        android:id="@+id/tue"-->
 <!--        android:orientation="horizontal" />-->
 
-<!--    <com.example.mycalender.CustomDayView-->
+<!--    <com.example.mycalender.views.CustomDayView-->
 <!--        android:id="@+id/wed"-->
 <!--        android:orientation="horizontal" />-->
 
-<!--    <com.example.mycalender.CustomDayView-->
+<!--    <com.example.mycalender.views.CustomDayView-->
 <!--        android:id="@+id/thu"-->
 <!--        android:orientation="horizontal" />-->
 
-<!--    <com.example.mycalender.CustomDayView-->
+<!--    <com.example.mycalender.views.CustomDayView-->
 <!--        android:id="@+id/fri"-->
 <!--        android:orientation="horizontal" />-->
 
-<!--    <com.example.mycalender.CustomDayView-->
+<!--    <com.example.mycalender.views.CustomDayView-->
 <!--        android:id="@+id/sat"-->
 <!--        android:orientation="horizontal" />-->
 

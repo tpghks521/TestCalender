@@ -1,9 +1,8 @@
-package com.example.mycalender
+package com.example.mycalender.views
 
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
-import android.widget.TextView
 
 class CustomDayView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0

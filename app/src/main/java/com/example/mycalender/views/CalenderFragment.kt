@@ -1,4 +1,4 @@
-package com.example.mycalender
+package com.example.mycalender.views
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import com.example.mycalender.R
 import com.example.mycalender.databinding.FragmentCalenderBinding
 
 class CalenderFragment : Fragment() {
