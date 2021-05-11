@@ -5,12 +5,13 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.TableRow
 import com.example.mycalender.R
+import java.util.*
 
 
 class CustomTableRow(context: Context, attrs: AttributeSet) : TableRow(context, attrs) {
 
     lateinit var sun: CustomDayView
- 
+
 
     init {
         bindView()
@@ -19,6 +20,7 @@ class CustomTableRow(context: Context, attrs: AttributeSet) : TableRow(context, 
     private fun bindView() {
         val dayView = CustomDayView(context)
         this.addView(dayView)
+
 
     }
 
