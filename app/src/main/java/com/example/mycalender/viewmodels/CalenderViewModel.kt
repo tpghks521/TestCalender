@@ -1,13 +1,10 @@
 package com.example.mycalender.viewmodels
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.example.mycalender.data.Date
 import com.example.mycalender.data.DateRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.text.FieldPosition
 import javax.inject.Inject
 
 @HiltViewModel

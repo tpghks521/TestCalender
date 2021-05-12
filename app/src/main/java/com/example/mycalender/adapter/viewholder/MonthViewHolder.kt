@@ -1,23 +1,21 @@
 package com.example.mycalender.adapter.viewholder
 
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mycalender.data.Date
+import com.example.mycalender.data.Day
 import com.example.mycalender.databinding.ViewDayBinding
 
-class MonthViewHolder(var binding: ViewDayBinding, var clickListener: (Date) -> Unit) :
+class MonthViewHolder(var binding: ViewDayBinding, var clickListener: (Day) -> Unit) :
     RecyclerView.ViewHolder(binding.root) {
 
     init {
         binding.setClickListener { view ->
-            clickListener.invoke(binding.date!!)
+            clickListener.invoke(binding.day!!)
         }
     }
 
-    fun bind(date: Date) {
+    fun bind(day: Day) {
         binding.apply {
-            this.date = date
-            this.day = date.day.toString()
+            this.day = day
         }
     }
 }

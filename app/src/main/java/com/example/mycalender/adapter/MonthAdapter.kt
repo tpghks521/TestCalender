@@ -1,23 +1,70 @@
 package com.example.mycalender.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.example.mycalender.R
 import com.example.mycalender.adapter.viewholder.MonthViewHolder
-import com.example.mycalender.data.Date
+import com.example.mycalender.data.CalenderData
+import com.example.mycalender.data.Day
+import com.example.mycalender.data.Memo
 import com.example.mycalender.databinding.ViewDayBinding
+import com.example.mycalender.viewmodels.MonthViewModel
+import kotlinx.coroutines.withTimeout
 
-class MonthAdapter(private val clickListener: (Date) -> Unit) :
-    ListAdapter<Date, MonthViewHolder>(MothDiffCallback()) {
+class MonthAdapter(
+    private val viewModel: MonthViewModel,
+    private val position: Int?,
+    private val lifecycleOwner: LifecycleOwner,
+    private val clickListener: (Day) -> Unit
+) :
+    ListAdapter<Day, MonthViewHolder>(MothDiffCallback()) {
+
+    init {
+        position?.let {
+            viewModel.getMemoList(position).observe(lifecycleOwner, Observer { memoList ->
+                if (memoList.isNotEmpty()) {
+//                    Log.d("TestMemo", "size ${memoList.size}")
+                    var changeList: List<Day>? = null
+                    memoList.forEach { memo ->
+
+                        changeList = currentList.map { day ->
+                            val date = "${day.dayOfYear}${day.dayOfMonth}"
+                            if (date == memo.yearAndMont && memo.day == day.value) {
+
+                                if (day.memo.isNullOrEmpty()) {
+                                    val memoList = ArrayList<Memo>()
+                                    memoList.add(memo)
+                                    day.memo = memoList
+                                } else {
+                                    day.memo?.add(memo)
+                                }
+                            }
+                            day
+                        }
+
+
+                    }
+                    changeList?.let { list ->
+                        Log.d("TestMemo", "submitList")
+                        submitList(changeList)
+                    }
+                }
+            })
+        }
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MonthViewHolder {
         val binding: ViewDayBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
             R.layout.view_day, parent, false
         )
-        return MonthViewHolder(binding,clickListener)
+        return MonthViewHolder(binding, clickListener)
     }
 
     override fun onBindViewHolder(holder: MonthViewHolder, position: Int) {
@@ -25,19 +72,19 @@ class MonthAdapter(private val clickListener: (Date) -> Unit) :
     }
 }
 
-private class MothDiffCallback : DiffUtil.ItemCallback<Date>() {
+private class MothDiffCallback : DiffUtil.ItemCallback<Day>() {
 
     override fun areItemsTheSame(
-        oldItem: Date,
-        newItem: Date
+        oldItem: Day,
+        newItem: Day
     ): Boolean {
-        return oldItem.day == newItem.day
+        return false
     }
 
     override fun areContentsTheSame(
-        oldItem: Date,
-        newItem: Date
+        oldItem: Day,
+        newItem: Day
     ): Boolean {
-        return oldItem == newItem
+        return false
     }
 }

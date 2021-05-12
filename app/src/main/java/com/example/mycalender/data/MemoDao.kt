@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
+import java.time.Year
 
 @Dao
 interface MemoDao {
@@ -12,7 +13,7 @@ interface MemoDao {
     @Insert
     fun insertMemo(memo: Memo)
 
-//    @Query("SELECT year=:year,month=:month,day=:day  FROM memo_table")
-//    fun getMemo(year: Int, month: Int, day: Int): List<Memo>
+    @Query("SELECT * FROM memo_table where yearAndMont=:yearAndMonth")
+    fun getMemoList(yearAndMonth: String): LiveData<List<Memo>>
 
 }

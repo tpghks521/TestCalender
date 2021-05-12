@@ -11,7 +11,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.mycalender.R
 import com.example.mycalender.adapter.MonthAdapter
-import com.example.mycalender.data.Date
+import com.example.mycalender.data.CalenderData
+import com.example.mycalender.data.Day
 import com.example.mycalender.data.Memo
 import com.example.mycalender.databinding.FragmentMonthBinding
 import com.example.mycalender.viewmodels.MonthViewModel
@@ -51,16 +52,9 @@ class MonthFragment : Fragment() {
         position?.let { viewModel.getDate(it) }
     }
 
-    private val clickListener: ((Date) -> Unit) = { date ->
+    private val clickListener: ((Day) -> Unit) = { date ->
         val dialog = MemoDialog(requireContext(), date) { memo ->
-            viewModel.updateMemo(
-                Memo(
-                    year = date.year,
-                    month = date.month,
-                    day = date.day,
-                    memo = memo
-                )
-            )
+            viewModel.updateMemo(memo)
         }
         dialog.setCanceledOnTouchOutside(true);
         dialog.setCancelable(true);
@@ -72,7 +66,13 @@ class MonthFragment : Fragment() {
     }
 
     private fun setUpRecyclerView() {
-        adapter = MonthAdapter(clickListener)
+        adapter =
+            MonthAdapter(
+                viewModel = viewModel,
+                clickListener = clickListener,
+                position = position,
+                lifecycleOwner = viewLifecycleOwner
+            )
         binding.recyclerView.adapter = adapter
     }
 

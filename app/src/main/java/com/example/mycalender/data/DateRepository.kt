@@ -30,30 +30,41 @@ class DateRepository @Inject constructor() {
         if (position < 0) {
             return
         }
-        val month = calList[position].month.month
+        val month = calList[position].month.value
         month?.let {
             currentMonth.postValue(it)
         }
     }
 
-    fun getDate(position: Int): List<Date> {
+    fun getYear(position: Int): Int {
         val cal = calList[position]
-        val dateList = ArrayList<Date>()
-        cal.month.day?.forEach { day ->
-            var yaer = cal.year!!
-            var month = cal.month.month!!
+        return cal.year
+    }
 
-            val date = when (day < 0) {
+    fun getMonth(position: Int): Int {
+        val cal = calList[position]
+        return cal.month.value
+    }
+
+    fun getDayList(position: Int): List<Day> {
+        val cal = calList[position]
+        val dateList = ArrayList<Day>()
+
+        cal.month.day.forEach { day ->
+            var yaer = cal.year
+            var month = cal.month.value
+
+            val date = when (day.value < 0) {
                 true -> {
                     month -= 1
                     if (month <= 0) {
                         yaer -= 1
                         month = 12
                     }
-                    Date(year = yaer, month = month, day = day * (-1))
+                    Day(dayOfYear = yaer, dayOfMonth = month, value = day.value * (-1))
                 }
                 false -> {
-                    Date(year = yaer, month = month, day = day)
+                    Day(dayOfYear = yaer, dayOfMonth = month, value = day.value)
                 }
             }
             dateList.add(date)
@@ -77,8 +88,8 @@ class DateRepository @Inject constructor() {
         return Month(month, dayList)
     }
 
-    private fun getDayList(year: Int, month: Int): ArrayList<Int> {
-        val list = ArrayList<Int>()
+    private fun getDayList(year: Int, month: Int): ArrayList<Day> {
+        val list = ArrayList<Day>()
         val calendar = getCalender(year, month)
         val end = calendar.getActualMaximum(Calendar.DATE)
         val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
@@ -86,13 +97,14 @@ class DateRepository @Inject constructor() {
         addXDay(year, month, dayOfWeek, list)
 
         for (day in 1..end) {
+            val day = Day(dayOfYear = year, dayOfMonth = month, day)
             list.add(day)
         }
 
         return list
     }
 
-    fun addXDay(year: Int, month: Int, dayOfWeek: Int, list: ArrayList<Int>) {
+    private fun addXDay(year: Int, month: Int, dayOfWeek: Int, list: ArrayList<Day>) {
         var xMonth = month - 1
         var xYear = year
         if (xMonth < 0) {
@@ -104,7 +116,8 @@ class DateRepository @Inject constructor() {
         val end = calender.getActualMaximum(Calendar.DATE)
 
         for (i in end - dayOfWeek + 2..end) {
-            list.add(i * (-1))
+            val day = Day(dayOfYear = xYear, dayOfMonth = xMonth, value = i * (-1))
+            list.add(day)
         }
     }
 

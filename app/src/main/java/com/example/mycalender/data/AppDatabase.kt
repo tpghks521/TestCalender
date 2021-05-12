@@ -9,6 +9,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 
 @Database(entities = [Memo::class], version = 1, exportSchema = false)
+
 abstract class AppDatabase : RoomDatabase() {
     abstract fun memoDao(): MemoDao
 

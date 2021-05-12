@@ -1,6 +1,5 @@
 package com.example.mycalender.views
 
-import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
@@ -8,13 +7,14 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import com.example.mycalender.R
-import com.example.mycalender.data.Date
-import org.w3c.dom.Text
+import com.example.mycalender.data.CalenderData
+import com.example.mycalender.data.Day
+import com.example.mycalender.data.Memo
 
 class MemoDialog(
     context: Context,
-    private val date: Date,
-    private val memoLisneter: (String) -> Unit
+    private val date: Day,
+    private val memoLisneter: (Memo) -> Unit
 ) :
     Dialog(context) {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,13 +27,16 @@ class MemoDialog(
         val editText: EditText = findViewById(R.id.edit_text)
         val confirmButton: Button = findViewById(R.id.button)
 
-        year.text = date.year.toString()
-        month.text = date.month.toString()
-        day.text = date.day.toString()
+        year.text = date.dayOfYear.toString()
+        month.text = date.dayOfMonth.toString()
+        day.text = date.value.toString()
 
 
         confirmButton.setOnClickListener {
-            memoLisneter.invoke(editText.text.toString())
+            val text = editText.text.toString()
+            val yearAndMonth = "${date.dayOfYear}${date.dayOfMonth}"
+            val memo = Memo(yearAndMont = yearAndMonth, text = text, day = date.value)
+            memoLisneter.invoke(memo)
             dismiss()
         }
 

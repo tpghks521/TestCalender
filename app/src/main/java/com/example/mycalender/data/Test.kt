@@ -1,14 +1,29 @@
 package com.example.mycalender.data
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 
-@Parcelize
-data class CalenderData(var year: Int? = null, var month: Month) : Parcelable
+data class CalenderData(var year: Int, var month: Month)
 
-@Parcelize
 data class Month(
-    var month: Int? = null,
-    var day: ArrayList<Int>? = null
-) : Parcelable
+    var value: Int,
+    var day: ArrayList<Day>
+)
+
+
+data class Day(
+    var dayOfYear: Int,
+    var dayOfMonth: Int,
+    var value: Int,
+    var memo: ArrayList<Memo>? = null
+)
+
+@Entity(tableName = "memo_table")
+data class Memo(
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0,
+    var yearAndMont: String,
+    var day: Int,
+    val text: String
+)
