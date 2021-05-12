@@ -35,10 +35,6 @@ class CalenderFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_calender, container, false)
         setUpViewPager()
         setUpObserve()
-
-
-
-
         return binding.root
     }
 
@@ -50,11 +46,9 @@ class CalenderFragment : Fragment() {
             viewPager.offscreenPageLimit = 3
         }
 
-
         binding.viewPager.post {
             binding.viewPager.currentItem = 1470
         }
-
 
         binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -63,8 +57,7 @@ class CalenderFragment : Fragment() {
             }
         })
     }
-
-
+    
     private fun setUpObserve() {
         viewModel.currentYear.observe(viewLifecycleOwner, Observer { yaer ->
             binding.yaerTitle.text = yaer.toString()
