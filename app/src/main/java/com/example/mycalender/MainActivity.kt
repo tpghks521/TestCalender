@@ -22,6 +22,7 @@ class MainActivity : BaseActivity() {
     }
 
     override fun observeViewModel() {
+        // 와우 대단하네 
     }
 
 }
