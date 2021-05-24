@@ -29,7 +29,6 @@ class MonthAdapter(
         position?.let {
             viewModel.getMemoList(position).observe(lifecycleOwner, Observer { memoList ->
                 if (memoList.isNotEmpty()) {
-//                    Log.d("TestMemo", "size ${memoList.size}")
                     var changeList: List<Day>? = null
                     memoList.forEach { memo ->
 
@@ -47,8 +46,6 @@ class MonthAdapter(
                             }
                             day
                         }
-
-
                     }
                     changeList?.let { list ->
                         Log.d("TestMemo", "submitList")
