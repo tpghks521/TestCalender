@@ -18,7 +18,6 @@ class MainActivity : BaseActivity() {
 
     override fun initializeDataBinding() {
         setContentView<ActivityMainBinding>(this, R.layout.activity_main)
-
     }
 
     override fun observeViewModel() {

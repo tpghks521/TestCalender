@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.mycalender.R
 import com.example.mycalender.adapter.MonthAdapter
+import com.example.mycalender.base.BaseFragment
 import com.example.mycalender.data.CalenderData
 import com.example.mycalender.data.Day
 import com.example.mycalender.data.Memo
@@ -19,34 +20,23 @@ import com.example.mycalender.viewmodels.MonthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MonthFragment : Fragment() {
+class MonthFragment : BaseFragment<FragmentMonthBinding, MonthViewModel>() {
 
-    private lateinit var binding: FragmentMonthBinding
+
     private lateinit var adapter: MonthAdapter
+    override val viewModel: MonthViewModel by viewModels()
     private val position: Int? by lazy {
         arguments?.getInt("position")
     }
 
+    override val layoutRes: Int
+        get() = R.layout.fragment_month
 
-    private val viewModel: MonthViewModel by viewModels()
-
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_month, container, false)
-
+    override fun subscribeUi() {
         setUpRecyclerView()
         setUpObserve()
         getDate()
-
-
-        return binding.root
     }
-
 
     private fun getDate() {
         position?.let { viewModel.getDate(it) }
@@ -76,7 +66,7 @@ class MonthFragment : Fragment() {
         binding.recyclerView.adapter = adapter
     }
 
-    private fun setUpObserve() {
+    override fun setUpObserve() {
         viewModel.dayList.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
         })
@@ -91,4 +81,6 @@ class MonthFragment : Fragment() {
             return fragment
         }
     }
+
+
 }

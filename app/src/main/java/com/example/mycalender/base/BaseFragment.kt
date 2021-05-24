@@ -1,5 +1,10 @@
 package com.example.mycalender.base
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -7,21 +12,24 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import javax.inject.Inject
 
-abstract class BaseFragment<D : ViewDataBinding>() : Fragment() {
+abstract class BaseFragment<D : ViewDataBinding, V : ViewModel> : Fragment() {
 
+    abstract val viewModel: V
+    protected lateinit var binding: D
     protected abstract val layoutRes: Int
 
-    lateinit var binding: D
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
-//    val viewModel by lazy {
-//        ViewModelProvider(viewModelStore,)
-//    }
+        binding = DataBindingUtil.inflate(inflater, layoutRes, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
 
-//    val viewModel: BaseViewModel by viewModels<>()
-//
-//    val viewModel2 : BaseViewModel by viewModels<> {
-//
-//    }
+        return binding.root
+    }
 
-
+    abstract fun subscribeUi()
+    abstract fun setUpObserve()
 }

@@ -16,26 +16,22 @@ import com.example.mycalender.viewmodels.CalenderViewModel
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.viewpager2.widget.ViewPager2
+import com.example.mycalender.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CalenderFragment : Fragment() {
+class CalenderFragment : BaseFragment<FragmentCalenderBinding, CalenderViewModel>() {
 
-    private lateinit var binding: FragmentCalenderBinding
+
     private lateinit var calenderAdapter: CalenderAdapter
 
-    private val viewModel: CalenderViewModel by viewModels()
+    override val viewModel: CalenderViewModel by viewModels()
+    override val layoutRes: Int
+        get() = R.layout.fragment_calender
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_calender, container, false)
+    override fun subscribeUi() {
         setUpViewPager()
         setUpObserve()
-        return binding.root
     }
 
     private fun setUpViewPager() {
@@ -57,8 +53,8 @@ class CalenderFragment : Fragment() {
             }
         })
     }
-    
-    private fun setUpObserve() {
+
+    override fun setUpObserve() {
         viewModel.currentYear.observe(viewLifecycleOwner, Observer { yaer ->
             binding.yaerTitle.text = yaer.toString()
         })
@@ -66,4 +62,6 @@ class CalenderFragment : Fragment() {
             binding.monthTitle.text = month.toString()
         })
     }
+
+
 }
